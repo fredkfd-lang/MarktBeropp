@@ -57,9 +57,11 @@ function paint(){
 const q=searchKey($("search").value.trim());
 let list=products.filter(p=>(cat==="all"||p.cat===cat)&&(!wishlistOnly||saved.has(p.id))&&searchKey(p.name[lang]+" "+p.desc[lang]+" "+p.term+" "+categoryLabel(p)).includes(q));
 if(sortMode==="az")list.sort((a,b)=>a.name[lang].localeCompare(b.name[lang]));
-if(sortMode==="za")list.sort((a,b)=>b.name[lang].localeCompare(a.name[lang]));\nif(sortMode==="category")list.sort((a,b)=>categoryLabel(a).localeCompare(categoryLabel(b),lang)||a.name[lang].localeCompare(b.name[lang]));
+if(sortMode==="za")list.sort((a,b)=>b.name[lang].localeCompare(a.name[lang]));
+if(sortMode==="category")list.sort((a,b)=>categoryLabel(a).localeCompare(categoryLabel(b),lang)||a.name[lang].localeCompare(b.name[lang]));
 const countText={de:["Produkt gefunden","Produkte gefunden"],en:["product found","products found"],fr:["produit trouvé","produits trouvés"]}[lang];
-$("resultCount").textContent=list.length+" "+countText[list.length===1?0:1];\n$("clearSearch").hidden=!$("search").value;
+$("resultCount").textContent=list.length+" "+countText[list.length===1?0:1];
+$("clearSearch").hidden=!$("search").value;
 $("products").innerHTML=list.length?list.map(p=>'<article class="card"><div class="visual '+p.visual+'">'+(p.imageUrl?'<img src="'+p.imageUrl+'" alt="'+p.name[lang]+'" style="width:100%;height:100%;object-fit:contain;padding:12px">' : '<span>'+p.emoji+'</span>')+'<span class="tag">'+tagLabel(p)+'</span><button type="button" class="heart '+(saved.has(p.id)?"saved":"")+'" data-save="'+p.id+'" aria-label="'+(saved.has(p.id)?copy[lang].removeSaved:copy[lang].save)+'" aria-pressed="'+(saved.has(p.id)?"true":"false")+'">'+(saved.has(p.id)?"♥":"♡")+'</button></div><div class="body"><div class="category">'+categoryLabel(p)+'</div><h3>'+p.name[lang]+'</h3><p>'+p.desc[lang]+'</p><div class="bottom"><span class="example">'+(p.price?p.price:"DEMO")+'</span><a class="amazon" href="'+productUrl(p)+'" target="_blank" rel="noopener noreferrer">'+copy[lang].amazon+' ↗</a></div></div></article>').join(""):'<div class="empty">'+(wishlistOnly?copy[lang].none:copy[lang].empty)+'<br><button type="button" data-reset-filters>'+({de:"Filter zurücksetzen",en:"Clear filters",fr:"Effacer les filtres"}[lang])+'</button></div>';
 $("wishCount").textContent=saved.size;
 $("wishlistButton").setAttribute("aria-label",copy[lang].wishlistButton+" ("+saved.size+")");
