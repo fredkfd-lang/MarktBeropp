@@ -50,7 +50,7 @@ function writeSaved(){try{localStorage.setItem("beropp-markt-favourites",JSON.st
 let lang="de",cat="all",wishlistOnly=false,sortMode="featured",saved=new Set(readSaved());
 const $=id=>document.getElementById(id);
 function productUrl(p){return p.amazonUrl||("https://www.amazon.de/s?k="+encodeURIComponent(p.term));}
-function searchKey(value){return String(value).normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLocaleLowerCase();}
+function searchKey(value){return String(value).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase();}
 function categoryLabel(p){return ({tech:copy[lang].tech,home:copy[lang].home,style:copy[lang].style,everyday:copy[lang].every})[p.cat]||p.cat;}
 function tagLabel(p){const labels={de:{TIPP:"TIPP",ZUHAUSE:"ZUHAUSE",LIFESTYLE:"LIFESTYLE",TECH:"TECHNIK",ALLTAG:"ALLTAG",WOHNEN:"WOHNEN",REISE:"REISE"},en:{TIPP:"PICK",ZUHAUSE:"HOME",LIFESTYLE:"LIFESTYLE",TECH:"TECH",ALLTAG:"EVERYDAY",WOHNEN:"HOME",REISE:"TRAVEL"},fr:{TIPP:"IDÉE",ZUHAUSE:"MAISON",LIFESTYLE:"STYLE",TECH:"TECH",ALLTAG:"QUOTIDIEN",WOHNEN:"MAISON",REISE:"VOYAGE"}};return labels[lang][p.tag]||categoryLabel(p).toUpperCase();}
 function paint(){
